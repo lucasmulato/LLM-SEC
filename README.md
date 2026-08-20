@@ -1,52 +1,117 @@
-# 🛡️ ART-T v2.5: AI Red Teaming Toolkit
+# LLM-SEC
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
-[![Security: OWASP LLM](https://img.shields.io/badge/Security-OWASP%20LLM%20Top%2010-red)](https://owasp.org/www-project-top-10-list-for-large-language-models/)
 
-## 📖 Overview
-The **AI Red Teaming Toolkit (ART-T)** is a comprehensive framework designed to stress-test Large Language Model (LLM) deployments and agentic systems. It provides a sophisticated Command & Control (C2) dashboard for real-time monitoring of adversarial campaigns, policy violations, and data leakage.
+> **Most security tools use AI to find bugs in your app. LLM-SEC finds the bugs in your AI.**
 
-## 🚀 Key Features
-* **Command & Control Dashboard:** A high-fidelity Next.js interface for real-time telemetry, agent orchestration, and risk posture assessment.
-* **Adversarial Prompt Injection:** Automated testing for Indirect and Direct injections.
-* **PII Leakage Scanner:** High-fidelity pipeline combining Regex, NER (spaCy), and Semantic reasoning to detect unauthorized data disclosure.
-* **Jailbreak Benchmarking:** Implements various "persona adoption" and "base64 encoding" bypass attempts to test model alignment.
-* **Vector Guard:** Inspects document embeddings for adversarial signatures, steganography, and low-entropy DoS risks.
-* **Excessive Agency Auditor:** LangGraph-based workflow to prevent critical actions without human confirmation (HITL).
-* **Automated Eval Reports:** Generates a security posture score (JSON/PDF) based on the [OWASP Top 10 for LLMs](https://owasp.org/www-project-top-10-list-for-large-language-models/).
+---
 
-## 🛠️ Tech Stack
-* **Frontend:** Next.js 15, Tailwind CSS, Lucide React (Cyberpunk UI).
-* **Core Backend:** Python 3.11+.
-* **Orchestration:** LangGraph (multi-step attack state machines).
-* **Vector Testing:** Weaviate / Pinecone
-* **Evals:** DeepEval / Giskard integrations
+## The Gap No One Is Filling
 
-## 📥 Getting Started
+The security industry is racing to build **AI-powered pentesters** — agents that scan APIs, chain exploits, and optimize for pass rates on known benchmarks. That's valuable work. It's also not what LLM-SEC does.
 
-### 1. Web Dashboard (C2)
+LLM-SEC is for the team shipping an LLM application — a RAG pipeline, an agent with tool access, a customer-facing chatbot with memory — and asking a harder question:
+
+> *"Where does my AI system fail when an attacker thinks in chains, not in single prompts?"*
+
+The vulnerabilities that matter in production aren't prompt injections that get caught by a safety classifier. They're:
+
+- **Cross-component chains**: A poisoned embedding → retrieved as trusted context → triggers an unauthorized API call.
+- **Stateful escalation**: An indirect injection that survives across conversation turns, gradually expanding what the model believes it can do.
+- **Reconstructed leakage**: PII that evades regex because the LLM assembles it from benign fragments across multiple retrieved documents.
+- **Agency bypass**: A model that executes critical actions without human confirmation because the guardrail only checked the output, not the decision path.
+
+These failures don't show up on traditional pentest reports. They don't fit neatly into OWASP categories in isolation. They emerge from the interaction of components that were secure individually.
+
+## What LLM-SEC Does Differently
+
+### 1. Full-Stack Attack Chains
+We don't test prompts. We test **systems**.
+
+Our LangGraph-based engine models attacks as state machines: reconnaissance → injection → retrieval manipulation → generation exploitation → unauthorized action. Each step feeds into the next. If the chain breaks, you know exactly where your defense held — and where it didn't.
+
+### 2. Tri-Stage PII Detection
+Regex catches obvious leaks. NER catches named entities. Neither catches what happens when an LLM *reconstructs* sensitive information from fragments.
+
+- **Stage 1**: Deterministic regex for high-confidence patterns
+- **Stage 2**: spaCy NER for entity recognition in unstructured output
+- **Stage 3**: Semantic LLM-as-a-Judge reasoning to flag *inferred* or *reconstructed* sensitive data
+
+### 3. Vector Guard
+Most RAG security stops at the prompt layer. LLM-SEC inspects the vector space:
+- Adversarial signature detection in embeddings
+- Steganographic payload identification in retrieved chunks
+- Low-entropy DoS risks (poisoned queries triggering unbounded retrieval)
+
+### 4. Excessive Agency Auditor
+When LLMs have tool access, the vulnerability isn't what they *say* — it's what they *do*.
+
+We audit the full decision path: map critical actions, validate human-in-the-loop checkpoints, and report bypass paths where low-privilege actions chain into high-privilege outcomes.
+
+### 5. Validation-First Reporting
+Every finding ships with:
+- Full reproduction steps
+- Exact attack chain (state transitions, retrieved context, generated output)
+- Confidence score, not binary pass/fail
+- OWASP LLM Top 10 mapping for compliance context
+
+We optimize for **depth and reproducibility**, not zero-noise dashboards.
+
+---
+
+## Architecture
+
+| Component | Purpose |
+|---|---|
+| **LangGraph Attack Engine** | Multi-step, stateful adversarial campaign orchestration |
+| **Tri-Stage PII Auditor** | Regex → NER → Semantic reasoning for contextual data leakage |
+| **Vector Guard** | Embedding-space adversarial inspection (Weaviate / Pinecone) |
+| **Agency Auditor** | Critical action path analysis with HITL validation |
+| **Eval Framework** | DeepEval / Giskard integrations for measurable, comparable results |
+
+---
+
+## Installation
+
 ```bash
-npm install
-npm run dev
-```
-
-### 2. Core Security Engine
-```bash
+git clone https://github.com/lucasmulato/llm-sec.git
+cd llm-sec
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
 
-## 🛠️ Key Features
-* **Tri-Stage PII Auditing:** A high-fidelity pipeline combining deterministic Regex, Named Entity Recognition (NER) via spaCy, and Semantic LLM-as-a-Judge reasoning to detect unauthorized data disclosure.
+## Quick Start
 
-## 🗺️ Roadmap
+```bash
+# Run a full-stack adversarial campaign against a RAG application
+python -m llmsec campaign --target http://localhost:8000 --config configs/rag_fullstack.yml
 
-   - [x] Phase 1: Core CLI and Basic PII Scanner
+# Inspect vector DB for adversarial embeddings
+python -m llmsec vector-guard --db weaviate --collection documents
 
-   - [ ] Phase 2: LangGraph-based Adaptive Attack Engine
+# Audit excessive agency in an agentic workflow
+python -m llmsec agency-audit --spec agent_config.json
+```
 
-   - [ ] Phase 3: RAG Poisoning & Vector DB Stress Testing
+---
 
-   - [ ] Phase 4: Full FastMCP Server integration
+## Roadmap
+
+- [x] Core CLI and Tri-Stage PII Scanner
+- [x] LangGraph-based Adaptive Attack Engine
+- [ ] RAG Poisoning & Vector DB Stress Testing (in progress)
+- [ ] Automated cross-component exploit chaining (retrieval → generation → action)
+- [ ] Full MCP Server integration for agentic environment testing
+
+---
+
+## Philosophy
+
+> "Low false positives are nice. Finding the vulnerability that burns your production RAG pipeline is better. Validation is always required — human or AI — so we optimize for depth, not silence."
+
+LLM-SEC is not a benchmark-optimization tool. It is a **production adversarial reasoning engine** for teams who need to understand how their LLM applications fail under realistic, multi-step attacks.
+
+## License
+
+MIT
