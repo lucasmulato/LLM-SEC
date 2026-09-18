@@ -109,6 +109,19 @@ celerybeat.pid
 
 # Environments
 .env
+.env.*
+!.env.example
+backups/
+logs/
+*.bak
+*.backup
+*~
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
 .venv
 env/
 venv/

@@ -1,18 +1,21 @@
 FROM python:3.11-slim
 
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    HF_HUB_OFFLINE=1 \
+    TRANSFORMERS_OFFLINE=1 \
+    HOME=/tmp
+
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+COPY pyproject.toml README.md ./
+COPY llmsec/ ./llmsec/
+COPY core/ ./core/
+COPY mcp_server/ ./mcp_server/
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-RUN python -m spacy download en_core_web_sm
+RUN pip install --no-cache-dir '.[mcp]'
 
-COPY . .
+USER 10001:10001
 
-EXPOSE 8000
-
-# Default to running the MCP server
-CMD ["python", "mcp_server/server.py"]
+CMD ["llmsec-mcp"]

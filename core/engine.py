@@ -1,7 +1,7 @@
 import asyncio
 import logging
-from typing import List, Type
-from b/home/lucasmulato369/ai-sec-toolkit/core.models import ScanResult, ScannerException
+from typing import Any, List
+from core.models import ScanResult, ScannerException
 
 class RedTeamEngine:
     def __init__(self, max_concurrency: int = 10):

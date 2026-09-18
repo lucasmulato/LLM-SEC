@@ -1,6 +1,8 @@
-from b/home/lucasmulato369/ai-sec-toolkit/core.engine import BaseScanner
-from b/home/lucasmulato369/ai-sec-toolkit/core.models import ScanResult, VulnerabilitySeverity
+from typing import Any
 import re
+
+from core.engine import BaseScanner
+from core.models import ScanResult, VulnerabilitySeverity
 
 class PromptInjectionScanner(BaseScanner):
     def __init__(self, model_adapter: Any, detection_regex: str = r"(?i)system halted|access granted"):

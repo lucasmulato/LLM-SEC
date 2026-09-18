@@ -1,6 +1,8 @@
 import re
-from typing import Dict, List, Any
+from typing import List
 from dataclasses import dataclass
+
+MAX_TEXT_LENGTH = 100000
 
 @dataclass
 class VectorHealth:
@@ -22,6 +24,10 @@ class VectorGuard:
         self.steganography_chars = set(['\u200b', '\u200c', '\u200d', '\ufeff'])
 
     def inspect_document(self, content: str) -> VectorHealth:
+        if not isinstance(content, str):
+            raise TypeError("content must be a string")
+        if len(content) > MAX_TEXT_LENGTH:
+            raise ValueError(f"content must not exceed {MAX_TEXT_LENGTH} characters")
         flags = []
         score = 0.0
 
@@ -38,15 +44,15 @@ class VectorGuard:
             score += 0.5
 
         # 3. Density Check (High repetition often messes up embeddings)
-        if len(content) > 0:
-            words = content.split()
+        words = content.split()
+        if words:
             unique_ratio = len(set(words)) / len(words)
             if unique_ratio < 0.1: # Less than 10% unique words
                 flags.append("LOW_ENTROPY: Repetitive content (DoS risk)")
                 score += 0.2
 
         return VectorHealth(
-            is_safe=score < 0.5,
+            is_safe=not flags,
             risk_score=min(score, 1.0),
             flags=flags
         )

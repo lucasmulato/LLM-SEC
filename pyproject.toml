@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llmsec"
+version = "0.1.0"
+description = "Local defensive PII scanning and document inspection"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+mcp = ["fastmcp>=2.14,<3"]
+ner = ["spacy>=3.8,<4"]
+dev = ["pytest>=8,<9", "pytest-asyncio>=0.24,<2", "ruff>=0.9,<1", "mypy>=1.14,<2", "build>=1.2,<2", "langgraph>=0.2,<1"]
+
+[project.scripts]
+llmsec = "llmsec.cli:main"
+llmsec-mcp = "mcp_server.server:main"
+
+[tool.setuptools]
+packages = ["llmsec"]
+py-modules = ["core.__init__", "core.scanner_pii", "core.vector_guard", "core.health", "mcp_server.__init__", "mcp_server.server"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+include = ["llmsec/**/*.py", "core/scanner_pii.py", "core/vector_guard.py", "core/health.py", "mcp_server/server.py", "tests/test_scanner.py", "tests/test_vector_guard.py", "tests/test_cli.py", "tests/test_mcp.py"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+
+[tool.mypy]
+files = ["llmsec", "core/scanner_pii.py", "core/vector_guard.py", "core/health.py", "mcp_server/server.py"]
+ignore_missing_imports = true
+follow_imports = "silent"

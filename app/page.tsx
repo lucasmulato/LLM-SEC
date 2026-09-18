@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   ShieldAlert, 
   Terminal, 
@@ -15,31 +13,34 @@ import {
 
 // Mock data for initial states
 const INITIAL_LOGS = [
-  { id: 1, type: 'info', time: '10:42:01', msg: 'ART-T Engine Initialized. Multi-agent orchestration ready.' },
-  { id: 2, type: 'warn', time: '10:42:05', msg: 'Monitoring LangGraph nodes: [evaluator, generator, hitl_gate]' },
-  { id: 3, type: 'error', time: '10:43:12', msg: 'Critical: Potential Excessive Agency detected in agent-bot-04' }
+  { id: 1, type: 'info', time: '10:42:01', msg: 'Sample: LLM-SEC orchestration trace; no engine connected.' },
+  { id: 2, type: 'warn', time: '10:42:05', msg: 'Sample LangGraph nodes: [evaluator, generator, hitl_gate]' },
+  { id: 3, type: 'error', time: '10:43:12', msg: 'Sample finding: Potential Excessive Agency in agent-bot-04' }
 ];
 
 export default function Page() {
-  const [logs] = useState(INITIAL_LOGS);
-  const [riskScore] = useState(68);
+  const logs = INITIAL_LOGS;
+  const riskScore = 68;
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-300 font-mono selection:bg-emerald-500/30">
       {/* --- HEADER / AI-SPM DASHBOARD --- */}
-      <header className="border-b border-zinc-800 p-4 bg-zinc-900/50 flex items-center justify-between sticky top-0 z-50 backdrop-blur-md">
+      <div className="bg-amber-500/90 text-zinc-950 text-xs font-bold tracking-widest px-4 py-1.5 text-center sticky top-0 z-50">
+        Demo -- static sample data; no backend connected
+      </div>
+      <header className="border-b border-zinc-800 p-4 bg-zinc-900/50 flex items-center justify-between backdrop-blur-md">
         <div className="flex items-center gap-3">
           <div className="bg-emerald-500 p-1.5 rounded-sm">
             <Skull className="text-zinc-950 w-5 h-5" />
           </div>
           <h1 className="text-xl font-bold tracking-tighter text-zinc-100 uppercase">
-            ART-T <span className="text-emerald-500">v2.5_C2</span>
+            LLM-SEC <span className="text-emerald-500">Prototype</span>
           </h1>
         </div>
 
         <div className="flex gap-8 items-center">
           <div className="flex flex-col items-end">
-            <span className="text-[10px] uppercase text-zinc-500">Global Risk Posture</span>
+            <span className="text-[10px] uppercase text-zinc-500">Sample Risk Posture</span>
             <span className={`text-xl font-bold ${riskScore > 70 ? 'text-rose-500' : 'text-amber-500'}`}>
               {riskScore}% CRITICAL
             </span>
@@ -71,16 +72,16 @@ export default function Page() {
               <Zap size={12} className="text-emerald-500" /> Scanner Hub
             </h2>
             <div className="flex flex-col gap-2">
-              <button className="w-full text-left p-2 text-xs border border-zinc-700 hover:border-emerald-500 hover:bg-emerald-500/10 transition-all rounded flex items-center justify-between group">
-                PII Scanner <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              <button disabled title="Unavailable in demo" className="w-full text-left p-2 text-xs border border-zinc-700 rounded flex items-center justify-between opacity-50 cursor-not-allowed">
+                PII Scanner <ChevronRight size={14} />
               </button>
-              <button className="w-full text-left p-2 text-xs border border-zinc-700 hover:border-amber-500 hover:bg-amber-500/10 transition-all rounded flex items-center justify-between group">
-                Jailbreak Bench <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              <button disabled title="Unavailable in demo" className="w-full text-left p-2 text-xs border border-zinc-700 rounded flex items-center justify-between opacity-50 cursor-not-allowed">
+                Jailbreak Bench <ChevronRight size={14} />
               </button>
-              <button className="w-full text-left p-2 text-xs border border-zinc-700 hover:border-rose-500 hover:bg-rose-500/10 transition-all rounded flex items-center justify-between group">
-                RAG Poisoning <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              <button disabled title="Unavailable in demo" className="w-full text-left p-2 text-xs border border-zinc-700 rounded flex items-center justify-between opacity-50 cursor-not-allowed">
+                RAG Poisoning <ChevronRight size={14} />
               </button>
-              <button className="w-full text-left p-2 text-xs border border-zinc-700 hover:border-blue-500 hover:bg-blue-500/10 transition-all rounded flex items-center justify-between group mt-4">
+              <button disabled title="Unavailable in demo" className="w-full text-left p-2 text-xs border border-zinc-700 rounded flex items-center justify-between opacity-50 cursor-not-allowed mt-4">
                 Generate AI-BOM <Database size={14} />
               </button>
             </div>
@@ -88,7 +89,7 @@ export default function Page() {
 
           <div className="bg-zinc-900/40 border border-zinc-800 p-4 rounded-lg flex-grow">
              <h2 className="text-[10px] uppercase font-bold text-zinc-500 mb-4 flex items-center gap-2">
-              <Activity size={12} className="text-emerald-500" /> System Metrics
+              <Activity size={12} className="text-emerald-500" /> Sample Metrics
             </h2>
             <div className="space-y-4">
               <MetricBar label="CPU Load" value={42} color="bg-emerald-500" />
@@ -105,7 +106,7 @@ export default function Page() {
           
           <div className="p-4 border-b border-zinc-800 flex justify-between items-center bg-zinc-900/60">
             <span className="text-xs font-bold uppercase tracking-widest text-zinc-400">Surface Mapper: LangGraph Visualizer</span>
-            <span className="text-[10px] bg-emerald-500/20 text-emerald-500 px-2 py-0.5 rounded animate-pulse">LIVE ORCHESTRATION</span>
+            <span className="text-[10px] bg-zinc-700/60 text-zinc-400 px-2 py-0.5 rounded">STATIC DEMO</span>
           </div>
 
           <div className="flex-grow flex items-center justify-center">
@@ -126,7 +127,7 @@ export default function Page() {
           <footer className="h-1/3 border-t border-zinc-800 bg-black/80 p-4 font-mono text-[11px] overflow-y-auto">
             <div className="flex items-center gap-2 mb-2 text-zinc-500 border-b border-zinc-800 pb-1">
               <Terminal size={12} />
-              <span>REASONING_TRACE_TELEMETRY</span>
+              <span>SAMPLE_REASONING_TRACE</span>
             </div>
             {logs.map((log) => (
               <div key={log.id} className="mb-1 leading-relaxed">
@@ -145,7 +146,7 @@ export default function Page() {
         <aside className="col-span-3 flex flex-col gap-4">
           <div className="bg-zinc-900/40 border border-zinc-800 p-4 rounded-lg flex-grow overflow-y-auto">
             <h2 className="text-[10px] uppercase font-bold text-zinc-500 mb-4 flex items-center gap-2">
-              <Search size={12} className="text-emerald-500" /> Active Agents
+              <Search size={12} className="text-emerald-500" /> Sample Agents
             </h2>
             <div className="space-y-3">
               <AgentCard name="red-bot-01" task="Jailbreak: Crescendo" status="Running" />
@@ -173,7 +174,7 @@ const MetricBar = ({ label, value, color }: { label: string, value: number, colo
 );
 
 const GraphNode = ({ name, icon, status, color }: { name: string, icon: React.ReactNode, status: string, color: string }) => (
-  <div className="flex flex-col items-center gap-2 group cursor-pointer">
+  <div className="flex flex-col items-center gap-2 group">
     <div className={`p-4 rounded-full border-2 transition-all duration-300 ${color === 'emerald' ? 'bg-emerald-500/10 border-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.3)]' : color === 'rose' ? 'bg-rose-500/10 border-rose-500 animate-pulse shadow-[0_0_15px_rgba(244,63,94,0.3)]' : 'bg-zinc-800 border-zinc-700 text-zinc-500'}`}>
       {icon}
     </div>
