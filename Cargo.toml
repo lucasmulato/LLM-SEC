@@ -1,0 +1,13 @@
+[workspace]
+members = [
+    "crates/wad18",
+    "crates/ssi-kernel",
+    "crates/ssi-gate",
+    "crates/ssi-csl",
+    "crates/ssi-ledger",
+    "crates/ssi-pco",
+    "tools/pure_wad18",
+    "tools/trace-validator",
+    "tools/mutation_engine",
+]
+resolver = "2"

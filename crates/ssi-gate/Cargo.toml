@@ -1,0 +1,17 @@
+[package]
+name = "ssi-gate"
+version = "0.1.0"
+edition = "2021"
+description = "SSI execution gate: PERMIT predicate and VERIFY→TRANSITION→INVARIANT_CHECK→COMMIT pipeline"
+
+[dependencies]
+ssi-kernel = { path = "../ssi-kernel" }
+wad18 = { path = "../wad18" }
+sha2 = { version = "0.10", default-features = false, features = ["force-soft"] }
+hex = { version = "0.4", default-features = false, features = ["alloc"] }
+
+[dev-dependencies]
+proptest = "1.5"
+
+[lints.clippy]
+float_arithmetic = "deny"

@@ -1,0 +1,20 @@
+[package]
+name = "ssi-ledger"
+version = "0.1.0"
+edition = "2021"
+description = "SSI Canonical state encoder, append-only hash-chained ledger, and SAC evidence store"
+
+[dependencies]
+ssi-kernel = { path = "../ssi-kernel" }
+ssi-csl = { path = "../ssi-csl" }
+wad18 = { path = "../wad18" }
+sha2 = { version = "0.10", default-features = false, features = ["force-soft"] }
+hex = { version = "0.4", default-features = false, features = ["alloc"] }
+
+[dev-dependencies]
+proptest = "1.5"
+ed25519-dalek = { version = "2.1", default-features = false, features = ["rand_core"] }
+rand = { version = "0.8", default-features = false, features = ["getrandom"] }
+
+[lints.clippy]
+float_arithmetic = "deny"

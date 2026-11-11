@@ -1,0 +1,15 @@
+[package]
+name = "pure-wad18"
+version = "0.1.0"
+edition = "2021"
+description = "PURE WAD-18 three-layer float-freedom verification pipeline"
+
+[[bin]]
+name = "pure-wad18"
+path = "src/main.rs"
+
+[dependencies]
+# No external dependencies — JSON serialized manually for reproducibility
+# and to avoid network fetch in sandboxed CI environments.
+
+[dev-dependencies]

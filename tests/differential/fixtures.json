@@ -1,0 +1,1562 @@
+[
+  {
+    "name": "nominal_pass",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "PERMIT",
+      "auth_valid": true,
+      "safe_action_valid": true,
+      "ver_valid": true,
+      "cap_valid": true,
+      "reasons_count": 0
+    }
+  },
+  {
+    "name": "nominal_with_req_cap",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": "COMPUTE",
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "PERMIT",
+      "auth_valid": true,
+      "safe_action_valid": true,
+      "ver_valid": true,
+      "cap_valid": true,
+      "reasons_count": 0
+    }
+  },
+  {
+    "name": "auth_inactive",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": false,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": false,
+      "safe_action_valid": true,
+      "ver_valid": true,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "auth_expired",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1699999900,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": false,
+      "safe_action_valid": true,
+      "ver_valid": true,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "clearance_insufficient",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 3,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 1,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": false,
+      "safe_action_valid": true,
+      "ver_valid": true,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "empty_token",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": false,
+      "safe_action_valid": true,
+      "ver_valid": true,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "empty_nonce",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": ""
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": false,
+      "safe_action_valid": true,
+      "ver_valid": true,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "containment_inactive",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": false,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": true,
+      "safe_action_valid": false,
+      "ver_valid": true,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "barrier_breached",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": false,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": true,
+      "safe_action_valid": false,
+      "ver_valid": true,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "quarantine_raised",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": true
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": true,
+      "safe_action_valid": false,
+      "ver_valid": true,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "emergency_halt_action",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "SYSTEM_HALT",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": true,
+      "safe_action_valid": false,
+      "ver_valid": true,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "risk_exceeds_bound",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 200000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 500000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": true,
+      "safe_action_valid": false,
+      "ver_valid": true,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "forbidden_keyword_exfiltrate",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act_exfiltrate_key",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": true,
+      "safe_action_valid": false,
+      "ver_valid": true,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "forbidden_keyword_exfiltrate_payload",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act_exfiltrate_payload",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": true,
+      "safe_action_valid": false,
+      "ver_valid": true,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "ver_unknown",
+    "current_epoch": 1700000000,
+    "ver_status": "UNKNOWN",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": true,
+      "safe_action_valid": true,
+      "ver_valid": false,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "ver_invalid",
+    "current_epoch": 1700000000,
+    "ver_status": "INVALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": true,
+      "safe_action_valid": true,
+      "ver_valid": false,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "cert_marked_invalid",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": false
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": true,
+      "safe_action_valid": true,
+      "ver_valid": false,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "payload_digest_invalid_len",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "abc",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": true,
+      "safe_action_valid": true,
+      "ver_valid": false,
+      "cap_valid": true,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "budget_overdraft",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": null,
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 5000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": true,
+      "safe_action_valid": true,
+      "ver_valid": true,
+      "cap_valid": false,
+      "reasons_count": 1
+    }
+  },
+  {
+    "name": "missing_capability",
+    "current_epoch": 1700000000,
+    "ver_status": "VALID",
+    "required_capability": "UNGRANTED_GPU_ACCESS",
+    "state": {
+      "I": {
+        "model_id": "model-oracle",
+        "weights_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "context_window_size": 128000,
+        "cognitive_budget_raw": 100000000000000000000,
+        "epistemic_confidence_raw": 995000000000000000,
+        "entropy_bound_raw": 20000000000000000,
+        "capabilities": [
+          "COMPUTE",
+          "READ",
+          "SAFE_DISPATCH"
+        ]
+      },
+      "S": {
+        "containment_active": true,
+        "containment_barrier_intact": true,
+        "safety_margin_raw": 800000000000000000,
+        "risk_bound_raw": 300000000000000000,
+        "active_envelope_id": "ENV-0",
+        "csl_constraints": [
+          "BUDGET_CEILING",
+          "CONTAINMENT_INTEGRITY",
+          "NON_DECEPTION"
+        ],
+        "quarantine_flag": false
+      },
+      "A": {
+        "action_id": "act-oracle-0",
+        "action_type": "COMPUTE",
+        "risk_assessment_raw": 100000000000000000,
+        "resource_cost_raw": 1000000000000000000,
+        "required_clearance": 2,
+        "payload_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "is_executed": false
+      },
+      "H": {
+        "auth_token": "auth-token-oracle",
+        "granter_id": "lead-safety-architect",
+        "clearance_level": 3,
+        "is_active": true,
+        "expires_at_epoch": 1800000000,
+        "nonce": "nonce-oracle-0"
+      },
+      "V": {
+        "certificate_id": "cert-oracle-0",
+        "proof_system": "SSI_ORACLE",
+        "proof_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "invariants_verified": [
+          "SafetyValid",
+          "TypeValid"
+        ],
+        "verifier_identity": "GATE_ROOT",
+        "verified_at_epoch": 1700000000,
+        "is_valid": true
+      },
+      "P": {
+        "sequence_number": 1,
+        "parent_state_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "merkle_root": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "audit_trail_id": "audit-oracle-0",
+        "timestamp_epoch_ms": 1700000000000
+      }
+    },
+    "expected": {
+      "decision": "REJECT",
+      "auth_valid": true,
+      "safe_action_valid": true,
+      "ver_valid": true,
+      "cap_valid": false,
+      "reasons_count": 1
+    }
+  }
+]

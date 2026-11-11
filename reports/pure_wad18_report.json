@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "tool": "pure-wad18",
+  "timestamp": "2026-11-11T13:22:36Z",
+  "scope": "./crates",
+  "verdict": "VERIFIED",
+  "scope_disclaimer": "Conformance to the PURE WAD-18 verification procedure for the named artifacts at the given timestamp. NOT a proof of all behaviors; Conformance Level 2 (Reproducible).",
+  "layer1_source": {
+    "passed": true,
+    "files_scanned": 35,
+    "findings_count": 0,
+    "findings": []
+  },
+  "layer2_build": {
+    "target": "wasm32v1-none",
+    "passed": true,
+    "target_justification": "wasm32v1-none: WebAssembly 2.0, no OS, no std, no hardware FP. Float ops must appear as named WASM opcodes (f32.const, f64.add etc.), making Layer 3 binary scan exhaustive and deterministic. Preferred over wasm32-unknown-unknown (may carry hidden allocator shims).",
+    "error_lines": [],
+    "artifacts": ["./target/wasm32v1-none/release/libwad18.rlib"]
+  },
+  "layer3_binary": {
+    "passed": true,
+    "artifacts_scanned": ["./target/wasm32v1-none/release/libwad18.rlib"],
+    "findings_count": 0,
+    "findings": []
+  },
+  "negative_controls": [{
+    "control_id": "NC-1",
+    "description": "Float literal injection (1.0_f64, 2.5, 1e10)",
+    "injection": "let x = 1.0_f64; let y = 2.5; let z = 1e10;",
+    "layer_caught": "Layer 1 (Source)",
+    "passed": true,
+    "details": "Layer 1 caught 3 finding(s): `1.0_f64` L4, `2.5` L5, `1e10` L6"
+  },
+  {
+    "control_id": "NC-2",
+    "description": "f64/f32 type in function signatures",
+    "injection": "pub fn sum(a: f64, b: f64) -> f64 { a + b }",
+    "layer_caught": "Layer 1 (Source)",
+    "passed": true,
+    "details": "Layer 1 caught 5 finding(s): `f64` L3, `f64` L3, `f64` L3, `f32` L4, `f32` L4"
+  },
+  {
+    "control_id": "NC-3",
+    "description": "Crate compiled with float enabled (WASM artifact containing f32.add)",
+    "injection": "WASM bytecode with opcode 0x92 (f32.add)",
+    "layer_caught": "Layer 3 (Binary Opcode Scan)",
+    "passed": true,
+    "details": "Layer 3 detected opcode f32.add in WASM code section"
+  }],
+  "negative_controls_all_caught": true
+}

@@ -1,0 +1,21 @@
+[package]
+name = "ssi-csl"
+version = "0.1.0"
+edition = "2021"
+description = "SSI Cognitive State Ledger: CSL=(ID,Σ,E,T,Q) with Ed25519 signatures"
+
+[dependencies]
+ssi-kernel = { path = "../ssi-kernel" }
+wad18 = { path = "../wad18" }
+# ed25519-dalek is audited (ISRG, Trail of Bits); no hand-rolled crypto.
+ed25519-dalek = { version = "2.1", default-features = false, features = ["rand_core"] }
+rand = { version = "0.8", default-features = false, features = ["getrandom"] }
+sha2 = { version = "0.10", default-features = false, features = ["force-soft"] }
+hex = { version = "0.4", default-features = false, features = ["alloc"] }
+zeroize = { version = "1.8", default-features = false }
+
+[dev-dependencies]
+proptest = "1.5"
+
+[lints.clippy]
+float_arithmetic = "deny"

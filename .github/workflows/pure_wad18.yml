@@ -1,0 +1,38 @@
+name: PURE WAD-18 Verification Pipeline
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  pure-wad18-verify:
+    name: 3-Layer Float-Freedom Verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32v1-none
+          components: clippy, rustfmt
+
+      - name: Build pure-wad18 verification tool
+        run: |
+          cargo build -p pure-wad18
+
+      - name: Execute 3-Layer Verification Pipeline & Negative Controls
+        run: |
+          ./target/debug/pure-wad18 --workspace .
+
+      - name: Archive Verification Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pure-wad18-reports
+          path: |
+            reports/pure_wad18_report.md
+            reports/pure_wad18_report.json

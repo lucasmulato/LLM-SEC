@@ -1,0 +1,13 @@
+[package]
+name = "wad18"
+version = "0.1.0"
+edition = "2021"
+description = "Pure integer-only WAD-18 fixed-point arithmetic crate for the SSI execution gateway"
+
+[dependencies]
+
+[dev-dependencies]
+proptest = "1.5"
+
+[lints.clippy]
+float_arithmetic = "deny"

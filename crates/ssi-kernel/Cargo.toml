@@ -1,0 +1,16 @@
+[package]
+name = "ssi-kernel"
+version = "0.1.0"
+edition = "2021"
+description = "SSI typed system state X=(I,S,A,H,V,P) and global invariant I(X)"
+
+[dependencies]
+wad18 = { path = "../wad18" }
+sha2 = { version = "0.10", default-features = false, features = ["force-soft"] }
+hex = { version = "0.4", default-features = false, features = ["alloc"] }
+
+[dev-dependencies]
+proptest = "1.5"
+
+[lints.clippy]
+float_arithmetic = "deny"

@@ -1,0 +1,12 @@
+[package]
+name = "trace-validator"
+version = "0.1.0"
+edition = "2021"
+description = "Runtime trace conformance verifier for SSI Kernel TLA+ specification"
+
+[dependencies]
+ssi-kernel = { path = "../../crates/ssi-kernel" }
+ssi-gate = { path = "../../crates/ssi-gate" }
+wad18 = { path = "../../crates/wad18" }
+sha2 = { version = "0.10", default-features = false }
+hex = { version = "0.4", default-features = false, features = ["alloc"] }
