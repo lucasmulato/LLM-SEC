@@ -240,19 +240,21 @@ Subject the gateway to an adversarial mutation engine with 15 canonical security
   - Revocation API (`RevocationRegistry`) invalidating compromised certificates/assets.
   - End-to-end demo binary (`crates/ssi-pco/src/bin/pco_demo.rs`) demonstrating nominal acceptance, forged proof rejection, state-rebound rejection, expired certificate rejection, and revoked certificate rejection.
   - *PO Mapping:* PO-4, PO-6.
-- **Task Group 3.3: $R^3(K, M, G)$ Governed Evolution & $\text{ADOPT}(Y)$ Gate**
-  - Implement `llmsec-r3` crate partitioning system into $(K, M, G)$.
+- [x] **Task Group 3.3: $R^3(K, M, G)$ Governed Evolution & $\text{ADOPT}(Y)$ Gate (Phase 3c)**
+  - Implement `ssi-r3` crate partitioning system into $(K, M, G)$ (SSI Defs 22-25, Theorem 6, §26).
+  - Exact `KernelManifest` and `KernelEqual(Y)` byte comparison rejecting intent/similarity (PO-7).
   - Implement adoption predicate:
     $$\text{ADOPT}(Y) \iff \text{KernelEqual}(Y) \land \text{ProofValid}(Y) \land \text{AuthorizationValid}(Y) \land \text{NonRegression}(Y)$$
-  - Non-regression engine runs the comprehensive invariant suite $\Phi$ against candidate $Y$:
+  - Non-regression engine runs the comprehensive invariant suite $\Phi$ + all 15 mutation checks on candidate $Y$:
     $$\forall \varphi \in \Phi: \varphi(X) = 1 \implies \varphi(Y) = 1$$
-  - Reject candidate configuration or model weights if any previously passed invariant fails.
+  - SACEvidence ledger recording for successful adoption and candidate quarantine with verified rollback for failures.
+  - Fixed-point evolution harness demonstrating $R^3(X^*) = X^*$ with reproducible equality check (SSI §26).
   - *PO Mapping:* PO-7, PO-8.
 
 #### Phase 3 Acceptance Criteria
-1. 15 Canonical Mutation Engine runs in CI and achieves a **100% detection score (15/15 caught)**.
+1. [x] 15 Canonical Mutation Engine runs in CI and achieves a **100% detection score (15/15 caught)**.
 2. [x] PCO validator operates out-of-process and successfully blocks simulated invalid proofs before external dispatch (all 5/5 demo scenarios & integration tests pass).
-3. $R^3$ adoption gate prevents adoption of mutated model configs that degrade safety invariants.
+3. [x] $R^3$ adoption gate prevents adoption of mutated model configs that degrade safety invariants (MUT-15 rejected, compliant refinement adopted, unauthorized refinement rejected, rollback verified, fixed-point harness passed).
 
 #### Phase 3 Verification Checkpoint
 - Automated mutation testing report generated in CI verifying 15/15 catches; PCO independent validation logs verified.
@@ -315,8 +317,8 @@ Every task and phase directly discharges one or more Proof Obligations:
 | **PO-4** | Verification Soundness ($\neg\text{VER}$) | `crates/ssi-gate/tests/gate_tests.rs`, `reports/differential_test_phase1b.md` (20/20 oracle match) | TG 2.1, 2.2 (`specs/tla/SSI_Kernel.tla`, `reports/tlc_model_checking_report.md`) | TG 3.1, 3.2 (PCO) | TG 4.1 | **Level 3** | **Level 3** |
 | **PO-5** | Invariant Preservation ($I(X')$) | `crates/ssi-gate/tests/gate_tests.rs`, `crates/ssi-kernel/tests/kernel_tests.rs` | TG 2.1, 2.2, 2.3 (`specs/tla/SSI_Kernel.tla`, `tools/trace-validator`) | TG 3.1 (MUT-09) | TG 4.1 | **Level 3** | **Level 3** |
 | **PO-6** | Cryptographic Provenance Binding | `crates/ssi-ledger/tests/ledger_tests.rs`, `crates/ssi-csl/tests/csl_tests.rs`, `target/debug/replay_audit` | TG 2.1 | TG 3.1 (MUT-05, 06, 14), TG 3.2 (`crates/ssi-pco`) | TG 4.1 | **Level 1** | **Level 3** |
-| **PO-7** | Safety Kernel Immutability | `crates/ssi-kernel/tests/kernel_tests.rs` | TG 2.1 | TG 3.1 (MUT-10), TG 3.3 | TG 4.2 | **Level 1** | **Level 3** |
-| **PO-8** | Recursive Non-Regression ($R^3$) | Planned TG 3.3 | TG 2.1 | TG 3.1 (MUT-13), TG 3.3 | TG 4.1 | **Level 0** | **Level 3** |
+| **PO-7** | Safety Kernel Immutability | `crates/ssi-kernel/tests/kernel_tests.rs` | TG 2.1 | TG 3.1 (MUT-10, 15), TG 3.3 (`crates/ssi-r3`) | TG 4.2 | **Level 1** | **Level 3** |
+| **PO-8** | Recursive Non-Regression ($R^3$) | `crates/ssi-r3/src/non_regression.rs`, `crates/ssi-r3/tests/r3_tests.rs` | TG 2.1 | TG 3.1 (MUT-13), TG 3.3 (`crates/ssi-r3`) | TG 4.1 | **Level 1** | **Level 3** |
 | **PO-9** | Deterministic Reproducibility | `crates/ssi-ledger/tests/ledger_tests.rs`, `replay_audit` | TG 2.3 (`tools/trace-validator` 1,000 steps verified) | TG 3.1 (MUT-15) | TG 4.2 | **Level 3** | **Level 4** |
 
 ---

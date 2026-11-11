@@ -1,6 +1,6 @@
 # PURE WAD-18 Verification Report
 
-> **Generated:** 2026-11-11T13:22:36Z  
+> **Generated:** 2026-11-11T13:40:51Z  
 > **Tool:** `pure-wad18`  
 > **Scope:** `./crates`
 
@@ -10,7 +10,7 @@
 
 | Layer | Description | Result |
 |-------|-------------|--------|
-| **Layer 1** | Source scanner — 35 files scanned | ✅ PASS |
+| **Layer 1** | Source scanner — 45 files scanned | ✅ PASS |
 | **Layer 2** | Float-free build (`wasm32v1-none`) | ✅ PASS |
 | **Layer 3** | Binary opcode scan — 1 artifact(s) | ✅ PASS |
 

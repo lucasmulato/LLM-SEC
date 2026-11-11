@@ -6,6 +6,7 @@ members = [
     "crates/ssi-csl",
     "crates/ssi-ledger",
     "crates/ssi-pco",
+    "crates/ssi-r3",
     "tools/pure_wad18",
     "tools/trace-validator",
     "tools/mutation_engine",

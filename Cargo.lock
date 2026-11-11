@@ -577,6 +577,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "ssi-r3"
+version = "0.1.0"
+dependencies = [
+ "ed25519-dalek",
+ "hex",
+ "rand 0.8.8",
+ "sha2",
+ "ssi-csl",
+ "ssi-gate",
+ "ssi-kernel",
+ "ssi-ledger",
+ "wad18",
+]
+
+[[package]]
 name = "subtle"
 version = "2.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"

@@ -1,13 +1,13 @@
 {
   "schema_version": "1.0",
   "tool": "pure-wad18",
-  "timestamp": "2026-11-11T13:22:36Z",
+  "timestamp": "2026-11-11T13:40:51Z",
   "scope": "./crates",
   "verdict": "VERIFIED",
   "scope_disclaimer": "Conformance to the PURE WAD-18 verification procedure for the named artifacts at the given timestamp. NOT a proof of all behaviors; Conformance Level 2 (Reproducible).",
   "layer1_source": {
     "passed": true,
-    "files_scanned": 35,
+    "files_scanned": 45,
     "findings_count": 0,
     "findings": []
   },
