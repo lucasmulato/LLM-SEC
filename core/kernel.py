@@ -138,6 +138,15 @@ class NormativeValue:
     def __delattr__(self, key: str) -> None:
         raise KernelImmutabilityError("NormativeValue instances are strictly immutable")
 
+    def __copy__(self) -> NormativeValue:
+        return self
+
+    def __deepcopy__(self, memo: Any) -> NormativeValue:
+        return self
+
+    def __reduce__(self) -> Tuple[Any, Tuple[Any, ...]]:
+        return (NormativeValue, (self._raw,))
+
     @property
     def raw(self) -> int:
         """Return the underlying 10^-18 scaled integer."""
@@ -309,34 +318,44 @@ class NormativeValue:
             return self._raw == other._raw
         if isinstance(other, int) and not isinstance(other, bool):
             return self._raw == other * WAD_SCALE
+        if isinstance(other, float):
+            return self._raw == NormativeValue.from_float(other)._raw
         return False
 
-    def __lt__(self, other: Union[NormativeValue, int]) -> bool:
+    def __lt__(self, other: Union[NormativeValue, int, float]) -> bool:
         if isinstance(other, NormativeValue):
             return self._raw < other._raw
         if isinstance(other, int) and not isinstance(other, bool):
             return self._raw < other * WAD_SCALE
+        if isinstance(other, float):
+            return self._raw < NormativeValue.from_float(other)._raw
         return NotImplemented
 
-    def __le__(self, other: Union[NormativeValue, int]) -> bool:
+    def __le__(self, other: Union[NormativeValue, int, float]) -> bool:
         if isinstance(other, NormativeValue):
             return self._raw <= other._raw
         if isinstance(other, int) and not isinstance(other, bool):
             return self._raw <= other * WAD_SCALE
+        if isinstance(other, float):
+            return self._raw <= NormativeValue.from_float(other)._raw
         return NotImplemented
 
-    def __gt__(self, other: Union[NormativeValue, int]) -> bool:
+    def __gt__(self, other: Union[NormativeValue, int, float]) -> bool:
         if isinstance(other, NormativeValue):
             return self._raw > other._raw
         if isinstance(other, int) and not isinstance(other, bool):
             return self._raw > other * WAD_SCALE
+        if isinstance(other, float):
+            return self._raw > NormativeValue.from_float(other)._raw
         return NotImplemented
 
-    def __ge__(self, other: Union[NormativeValue, int]) -> bool:
+    def __ge__(self, other: Union[NormativeValue, int, float]) -> bool:
         if isinstance(other, NormativeValue):
             return self._raw >= other._raw
         if isinstance(other, int) and not isinstance(other, bool):
             return self._raw >= other * WAD_SCALE
+        if isinstance(other, float):
+            return self._raw >= NormativeValue.from_float(other)._raw
         return NotImplemented
 
     def __hash__(self) -> int:

@@ -4,6 +4,7 @@ from typing import Any
 
 from fastmcp import FastMCP
 
+from core.gate import FailClosedGuardrailGate
 from core.scanner_pii import MAX_TEXT_LENGTH, PIIScanner
 
 
@@ -17,6 +18,7 @@ mcp = FastMCP(
     ),
 )
 _scan_lock = asyncio.Lock()
+_guardrail_gate = FailClosedGuardrailGate()
 
 
 @lru_cache(maxsize=1)
@@ -31,6 +33,12 @@ async def scan_text_for_pii(text: str) -> dict[str, Any]:
         raise TypeError("text must be a string")
     if len(text) > MAX_TEXT_LENGTH:
         raise ValueError(f"text must not exceed {MAX_TEXT_LENGTH} characters")
+
+    # Guardrail Gate: Fail-Closed Integrity Check
+    gate_status = _guardrail_gate.kernel.verify_kernel_integrity()
+    if not gate_status.satisfied:
+        raise RuntimeError(f"FailClosedGuardrailGate rejected tool execution: {gate_status.details}")
+
     async with _scan_lock:
         task = asyncio.create_task(get_scanner().scan(text, include_values=False))
         try:

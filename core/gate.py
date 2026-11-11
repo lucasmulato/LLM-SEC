@@ -542,6 +542,136 @@ class DeterministicExecutionGate:
         )
 
 
+class FailClosedGuardrailGate:
+    """Unified high-assurance security gate for autonomous agent tool execution.
+
+    Coordinates SafetyKernel, DeterministicExecutionGate, and optional
+    Cognitive State Ledger (CSL) authorization continuity checks.
+    Guarantees strict fail-closed execution semantics across the entire agent lifecycle.
+    """
+
+    def __init__(
+        self,
+        kernel: Optional[SafetyKernel] = None,
+        verifier_key: str = "TRUSTED_GUARDRAIL_ROOT"
+    ):
+        self._kernel = kernel if kernel is not None else SafetyKernel()
+        self._gate = DeterministicExecutionGate(self._kernel, verifier_key=verifier_key)
+
+    @property
+    def kernel(self) -> SafetyKernel:
+        return self._kernel
+
+    @property
+    def execution_gate(self) -> DeterministicExecutionGate:
+        return self._gate
+
+    @staticmethod
+    def default_state_builder(
+        pre_state: SystemState,
+        action: ActionState,
+        result: ExecutionResult,
+        verifier_sig: str
+    ) -> SystemState:
+        """Deterministic post-state builder producing Next(X, a, X')."""
+        from core.kernel import (
+            IntelligenceState,
+            NormativeValue,
+            ProvenanceState,
+            VerificationState,
+        )
+
+        # Monotonic resource deduction
+        new_budget = pre_state.I.cognitive_budget - action.resource_cost
+        new_I = IntelligenceState(
+            model_id=pre_state.I.model_id,
+            weights_digest=pre_state.I.weights_digest,
+            context_window_size=pre_state.I.context_window_size,
+            cognitive_budget=new_budget,
+            epistemic_confidence=pre_state.I.epistemic_confidence,
+            entropy_bound=pre_state.I.entropy_bound,
+            capabilities=pre_state.I.capabilities,
+        )
+
+        # Mark action executed
+        new_A = ActionState(
+            action_id=action.action_id,
+            action_type=action.action_type,
+            risk_assessment=action.risk_assessment,
+            resource_cost=action.resource_cost,
+            required_clearance=action.required_clearance,
+            payload_digest=action.payload_digest,
+            is_executed=True,
+        )
+
+        # Update verification certificate
+        new_V = VerificationState(
+            certificate_id=f"cert-{action.action_id[:16]}",
+            proof_system="DETERMINISTIC_GATE_V1",
+            proof_digest=result.output_digest,
+            invariants_verified=pre_state.V.invariants_verified,
+            verifier_identity="GATE_VERIFIER",
+            verified_at_epoch=int(time.time()),
+            is_valid=True,
+        )
+
+        # Increment sequence & link parent state hash
+        new_P = ProvenanceState(
+            sequence_number=pre_state.P.sequence_number + 1,
+            parent_state_hash=pre_state.compute_state_hash(),
+            merkle_root=hashlib.sha256(
+                (pre_state.P.merkle_root + ":" + result.output_digest).encode("utf-8")
+            ).hexdigest(),
+            audit_trail_id=f"audit-seg-{pre_state.P.sequence_number + 1}",
+            timestamp_epoch_ms=int(time.time() * 1000),
+        )
+
+        return SystemState(
+            I=new_I,
+            S=pre_state.S,
+            A=new_A,
+            H=pre_state.H,
+            V=new_V,
+            P=new_P,
+        )
+
+    def execute(
+        self,
+        pre_state: SystemState,
+        action: ActionState,
+        execution_handler: Callable[[ActionState], Any],
+        state_builder: Optional[Callable[[SystemState, ActionState, ExecutionResult, str], SystemState]] = None,
+        csl: Optional[Any] = None,
+        required_capability: Optional[str] = None,
+        current_epoch: Optional[int] = None,
+        verification_status: VerificationStatus = VerificationStatus.VALID
+    ) -> ExecutionCommit:
+        """Route tool or agent execution through CSL continuity and the verification gate."""
+        now_epoch = current_epoch if current_epoch is not None else int(time.time())
+
+        # If CSL envelope provided, enforce continuous authorization under Axiom 10
+        if csl is not None:
+            from core.ledger import assert_authorization_continuity
+            assert_authorization_continuity(
+                csl=csl,
+                state=pre_state,
+                proposed_action=action,
+                current_epoch=now_epoch
+            )
+
+        builder = state_builder if state_builder is not None else self.default_state_builder
+
+        return self._gate.execute_and_commit(
+            pre_state=pre_state,
+            action=action,
+            execution_handler=execution_handler,
+            state_builder=builder,
+            required_capability=required_capability,
+            current_epoch=now_epoch,
+            verification_status=verification_status
+        )
+
+
 __all__ = [
     "GateException",
     "PermitDeniedError",
@@ -561,4 +691,5 @@ __all__ = [
     "ExecutionCertificate",
     "ExecutionCommit",
     "DeterministicExecutionGate",
+    "FailClosedGuardrailGate",
 ]

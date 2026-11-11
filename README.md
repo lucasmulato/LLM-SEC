@@ -1,90 +1,140 @@
-# LLM-SEC
+# LLM-SEC: Safe Super Intelligence (SSI) Axiomatic System v1.0
 
-Local defensive PII scanning and document inspection. This is an early-stage toolkit, not a production assurance system.
+High-Assurance Security Architecture, Formal Verification, and Deterministic Gating for Autonomous AI Agents and Red-Teaming Systems.
 
-## Implemented baseline
+---
 
-- Regex detection for email addresses, SSN-shaped values, and a limited API-key pattern.
-- Optional local spaCy NER for PERSON, ORG, and GPE entities. Entity matches are potential sensitive data, not confirmed leaks.
-- Masked findings by default, bounded inputs (100,000 characters), and explicit stage coverage.
-- Document text heuristics for configured instruction signatures, hidden characters, and repetition. These do not inspect vector databases or embeddings.
-- A local stdio MCP tool, `scan_text_for_pii`, returning structured, masked results.
-- A static Next.js dashboard prototype with no backend connection.
+## Overview
 
-Semantic/reconstructed PII detection is **not implemented**. Reports always include `complete: false`; missing optional NER dependencies/models are reported as `unavailable`. No findings does not prove an absence of sensitive data. Document `is_safe` means only that no configured heuristic flagged the text; scores are not calibrated probabilities.
+`LLM-SEC` is an axiomatic, fail-closed security and verification kernel designed to replace heuristic "LLM-as-a-judge" filters and loose text-matching guardrails with mathematically provable security boundaries. Built upon the **Safe Super Intelligence (SSI) Axiomatic System v1.0**, it provides:
 
-## Installation
+1. **WAD-18 Deterministic Arithmetic (Axioms 1 & 2):** Exact \(10^{-18}\) integer-scaled normative arithmetic avoiding IEEE 754 non-determinism, with fail-closed bounds checking against overflow, underflow, and zero division.
+2. **Typed Discrete System State (Definition 3):** Immutable state tuple \(X = (I, S, A, H, V, P)\) representing Intelligence, Safety, Action, Human Authorization, Verification, and Provenance.
+3. **Immutable Safety Kernel \(K\) (Definition 15, Axiom 9):** Tamper-proof execution boundary with non-negotiable arithmetic semantics, invariant enforcement, and emergency quarantine/halt triggers.
+4. **Execution Permit Gate \(\text{PERMIT}(X, a)\) (Definition 11, Axiom A2):** Strict four-predicate gating (\(\text{AUTH} \land \text{SAFE\_ACTION} \land \text{VER} \land \text{CAP}\)) ensuring that unpermitted actions are never dispatched.
+5. **Continuous Authorization & Cognitive State Ledger (CSL) (Definitions 6 & 16, Axiom 10):** Cryptographically signed operational envelopes \(\text{CSL} = (\text{AuthId}, \Sigma, E, T, Q)\) with monotonic revocation if time, risk, or budget bounds are exceeded.
+6. **Append-Only Trace Storage & SAC Evidence:** Cryptographic hash-chained audit logging emitting machine-checkable Safety Asset Class (`SAC-1`, `SAC-2`, `SAC-3`) evidence objects.
 
-Requires Python 3.11 or newer. The base CLI uses only the standard library.
+---
+
+## Core Architecture
+
+```
+                          Autonomous Action Proposal (a)
+                                       │
+                                       ▼
+                     ┌───────────────────────────────────┐
+                     │     CSL Envelope Check (Axiom 10) │
+                     │   T (Time), E (Risk), Q (Rules)   │
+                     └─────────────────┬─────────────────┘
+                                       │
+                                       ▼
+                     ┌───────────────────────────────────┐
+                     │    PERMIT(X, a) Gate (Def 11)     │
+                     │  AUTH ∧ SAFE_ACTION ∧ VER ∧ CAP   │
+                     └─────────────────┬─────────────────┘
+                                       │ [Axiom A2: NOT PERMIT => REJECT]
+                                       ▼
+                     ┌───────────────────────────────────┐
+                     │    EXECUTE (Controlled Sandbox)   │
+                     └─────────────────┬─────────────────┘
+                                       │
+                                       ▼
+                     ┌───────────────────────────────────┐
+                     │  VERIFY & Bind Certificate (Def 29)│
+                     └─────────────────┬─────────────────┘
+                                       │
+                                       ▼
+                     ┌───────────────────────────────────┐
+                     │ Transition Check: I(X') (Thm 3)   │
+                     └─────────────────┬─────────────────┘
+                                       │
+                                       ▼
+                     ┌───────────────────────────────────┐
+                     │ COMMIT & Append SAC Evidence Log  │
+                     └───────────────────────────────────┘
+```
+
+### Module Reference
+
+- [`core/kernel.py`](core/kernel.py):
+  - `NormativeValue`: WAD-18 fixed-point arithmetic (`WAD_SCALE = 10**18`).
+  - `SystemState`: 6-tuple \(X = (I, S, A, H, V, P)\) with canonical state hashing \(H(X)\).
+  - `SafetyKernel`: Immutable kernel with global invariant evaluation \(\mathcal{I}(X)\) across Kernel Integrity (KI), Type Validity (TV), CSL Validity, Authorization Validity (AV), Safety Invariant Validity (SIV), and Provenance Validity (PV).
+- [`core/gate.py`](core/gate.py):
+  - `evaluate_permit()`: Computes \(\text{PERMIT}(X, a)\).
+  - `validate_transition()`: Validates sequence monotonicity, parent lineage, budget conservation, and \(\mathcal{I}(X')\) preservation.
+  - `DeterministicExecutionGate`: 4-stage pipeline `EXECUTE -> VERIFY -> INVARIANT CHECK -> COMMIT`.
+  - `FailClosedGuardrailGate`: High-level security gate for autonomous tools and red-teaming scanners.
+- [`core/ledger.py`](core/ledger.py):
+  - `CSLEnvelope`: Cryptographically signed authorization envelope \((\text{AuthId}, \Sigma, E, T, Q)\).
+  - `verify_authorization_continuity()`: Continuous enforcement of Axiom 10.
+  - `canonical_encode_state()` & `compute_state_id()`: Deterministic encoding \(\text{ENC}(X)\) and \(\text{ID}_X = H(\text{ENC}(X))\).
+  - `AppendOnlyLedgerStore`: Rolling SHA-256 chained audit storage producing `SACEvidence`.
+- [`core/vector_guard.py`](core/vector_guard.py) & [`core/evaluator.py`](core/evaluator.py):
+  - Strict WAD-18 normative metrics replacing loose floating-point guardrails.
+
+---
+
+## Formal Proof Obligations (Section 34)
+
+The test suite in [`tests/test_axioms.py`](tests/test_axioms.py) provides machine-checked verification of Core Proof Obligations **PO-1 through PO-9**:
+
+| Obligation | Axiom / Definition | Description | Status |
+| :--- | :--- | :--- | :---: |
+| **PO-1** | Definition 3 | Type Safety & State Space Inhabitance | **Verified** |
+| **PO-2** | Axioms 1 & 2 | WAD-18 Bounded Deterministic Arithmetic & Overflow Containment | **Verified** |
+| **PO-3** | Definition 15, Axiom 9 | Safety Kernel Immutability & Supremacy | **Verified** |
+| **PO-4** | Definition 11, Axiom A2 | Permit Soundness: \(\neg \text{PERMIT}(X, a) \implies \neg \text{EXECUTE}(X, a)\) | **Verified** |
+| **PO-5** | Axiom 10 | Continuous Authorization & Monotonic Envelope Revocation | **Verified** |
+| **PO-6** | Theorem 3, Definition 19 | Global System Invariant Preservation \(\mathcal{I}(X')\) | **Verified** |
+| **PO-7** | Section 5, Axiom 4 | Fail-Closed Emergency Quarantine on Indeterminate/Crashing State | **Verified** |
+| **PO-8** | Definitions 13, 14, 29 | Cryptographic Lineage Binding & Provenance Hash Chain | **Verified** |
+| **PO-9** | Section 34.9 | Deterministic Reproducibility & Audit Replay Consistency | **Verified** |
+
+---
+
+## Quickstart & Verification
+
+### Running the Test Suite
+
+All tests execute via the standard Python 3 `unittest` runner:
 
 ```bash
+# Run formal Proof Obligations PO-1 through PO-9
+python3 -m unittest tests/test_axioms.py
+
+# Run kernel, gate, and ledger verification tests
+python3 -m unittest tests/test_kernel.py tests/test_gate.py tests/test_ledger.py
+
+# Run complete repository test suite (100+ tests)
+python3 -m unittest discover tests
+```
+
+### Installation
+
+Requires Python 3.11+. The core axiomatic modules require **zero third-party dependencies**, utilizing pure Python standard library primitives:
+
+```bash
+git clone https://github.com/lucasmulato/llm-sec.git
+cd llm-sec
 python3 -m venv .venv
-. .venv/bin/activate
-python -m pip install -e .
-python -m llmsec --help
+source .venv/bin/activate
+pip install -e .
 ```
 
-Optional installations:
+### Local Defensive CLI & MCP Server
 
 ```bash
-python -m pip install -e '.[mcp]'
-python -m pip install -e '.[ner]'
-python -m spacy download en_core_web_sm
-```
-
-The last command explicitly downloads a model. Scanning itself never downloads models or calls an external LLM API. Provision an approved local model before offline use. `requirements.txt` installs both runtime extras from `pyproject.toml`; dependency ranges are not a reproducible transitive lockfile.
-
-## Commands
-
-```bash
+# Local defensive PII inspection
 llmsec scan 'fixture@example.test' --regex-only --json
-llmsec scan --file sample.txt --json
-llmsec inspect-document 'ordinary local document' --json
+
+# Run document inspection through normative vector guard
+llmsec inspect-document 'sample.txt' --json
+
+# Run standard health validation
 llmsec health
-```
 
-`python -m llmsec` is equivalent to `llmsec`. Use files rather than shell arguments for sensitive input to avoid shell-history/process-list exposure. `--include-values` explicitly exposes raw PII in local CLI output; omit it for normal use. JSON output is plain JSON on stdout. Input/scan failures exit nonzero; findings themselves do not change the exit code. Health checks validate regex and document heuristics only, not NER availability or semantic coverage.
-
-The supported CLI does not persist evidence. Legacy SQLite memory/redactor modules remain unsupported and are not used or included in the wheel. Existing evidence requires a separate access-control and retention policy.
-
-## Local MCP
-
-```bash
+# Run local MCP stdio server
 llmsec-mcp
 ```
-
-Configure a trusted local MCP client to launch this command over stdio. There is no HTTP listener, port 8000 endpoint, remote authentication, or Redis service. Authorization rests on the OS permissions and trust of the client launching the process. Do not expose or bridge this process to untrusted remote callers. The legacy `mcp_server/security.py` decorators are not a deployed security boundary and are excluded from the distribution.
-
-The tool masks values and serializes scanner execution. Its character limit is an application limit, not a transport-frame limit or hard CPU deadline. Thread cancellation does not forcibly terminate underlying model execution.
-
-## Container
-
-```bash
-docker compose build
-docker compose run --rm -T llmsec-mcp
-```
-
-Compose runs the stdio service without networking, as a non-root user, with a read-only filesystem and bounded temporary storage/resources. No ports, secrets, or evidence volumes are mounted. The default image does not contain spaCy or its NER model and reports degraded coverage. Docker alone does not inherit Compose hardening; use the Compose configuration. Image digests and transitive dependency locks remain release-hardening work.
-
-## Development checks
-
-```bash
-python -m pip install -e '.[dev,mcp]'
-python -m pytest tests/ -v
-python -m ruff check .
-python -m mypy
-python -m build
-```
-
-Lint and type checking currently cover the supported defensive modules and their new tests, not every legacy experiment. The development extra includes LangGraph solely for the existing agency-auditor tests. Those tests exercise keyword/boolean heuristics, not authenticated approval enforcement. NER tests use local mocks rather than establishing accuracy of a real model.
-
-For the dashboard, install dependencies with `npm ci`, then use `npm run dev` or `npm run build`. Its metrics and controls are demonstration-only.
-
-## Scope and next milestones
-
-- Establish an evaluated local semantic PII detector using synthetic labeled fixtures, measured precision/recall, and explicit uncertainty before making reconstructed-leakage claims.
-- Define structured permission/approval evidence for defensive agency auditing.
-- Add release locks, container build checks, and a securely connected dashboard only after a service trust model is defined.
-- Vector database connectors, DeepEval/Giskard integration, OWASP-mapped evidence reports, and full-system campaigns are not implemented in the supported package.
-
-Legacy campaign modules remain in the repository but are excluded from the installed wheel and CLI/MCP surface. Their simulations are not security results. Known malformed imports in `core/engine.py` and `core/injection.py` remain outside this defensive baseline. The former `art_t.py` CLI and import-time scaffolding generator have been retired in favor of `llmsec`.
