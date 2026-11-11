@@ -6,6 +6,7 @@
 //! - Global Invariant I(X) = TypeValid ∧ KernelValid ∧ CSLValid ∧ AuthValid ∧ SafetyValid ∧ VerValid ∧ ProvValid
 //! - Tri-state invariant evaluation: Unknown ⇒ FAIL (fail-closed)
 
+#![forbid(unsafe_code)]
 #![deny(clippy::float_arithmetic)]
 
 pub mod error;

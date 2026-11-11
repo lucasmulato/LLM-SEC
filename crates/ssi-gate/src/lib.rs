@@ -6,6 +6,7 @@
 //! No external effects occur until COMMIT succeeds.
 //! Any failure at any stage returns REJECT with no side effect.
 
+#![forbid(unsafe_code)]
 #![deny(clippy::float_arithmetic)]
 
 pub mod error;

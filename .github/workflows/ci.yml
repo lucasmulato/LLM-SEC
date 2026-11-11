@@ -1,0 +1,47 @@
+name: LLM-SEC Continuous Assurance CI Matrix
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  unified-verification:
+    name: Full Gateway Verification Pipeline (PO-1..PO-9)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32v1-none
+          components: clippy, rustfmt
+
+      - name: Set up Java 21 for TLC Model Checker
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Set up Python 3.11 for Differential Oracle & Verification Runner
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Execute Full Verification Pipeline (make verify)
+        run: |
+          make verify
+
+      - name: Archive Verification Reports & SBOM
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-artifacts
+          path: |
+            reports/verification_verdict.json
+            reports/pure_wad18_report.md
+            reports/mutation_report.md
+            reports/sbom.json

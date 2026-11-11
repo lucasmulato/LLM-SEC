@@ -9,6 +9,7 @@
 //! - Explicit fail-closed errors for all numerical faults.
 
 #![no_std]
+#![forbid(unsafe_code)]
 #![deny(clippy::float_arithmetic)]
 
 pub mod error;

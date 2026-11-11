@@ -169,3 +169,45 @@ fn test_injected_tamper_detected_on_file_replay() {
     // Clean up
     let _ = fs::remove_file(&ledger_file);
 }
+
+#[test]
+fn test_generate_audit_sample_fixture() {
+    let fixture_path = "../../tests/fixtures/audit_sample.ndjson";
+    let _ = fs::remove_file(fixture_path);
+
+    let mut store = AppendOnlyLedgerStore::with_file(fixture_path).unwrap();
+
+    let mut csprng = OsRng;
+    let key = SigningKey::generate(&mut csprng);
+
+    let csl = CSLEnvelope::sign_new(
+        "AUTH-FIXTURE",
+        OperatingEnvelope {
+            envelope_id: "ENV-FIXTURE".into(),
+            max_risk_bound: Wad18::ONE,
+            max_resource_cost_per_action: Wad18::from_int(10).unwrap(),
+            total_budget_limit: Wad18::from_int(100).unwrap(),
+            allowed_action_types: BTreeSet::new(),
+        },
+        TemporalValidity {
+            valid_from_epoch: 0,
+            valid_until_epoch: 10000,
+            max_transitions: 100,
+        },
+        BTreeSet::new(),
+        &key,
+    );
+
+    let s0 = build_state(0, &"0".repeat(64));
+    let s1 = build_state(1, "hash-0");
+    let a1 = s0.action.clone();
+    store.append_transition(&s0, &a1, &s1, &csl, "cert-1", SafetyAssetClass::Sac3FormalProvenance, "gamma-step-1", 1000).unwrap();
+
+    let s2 = build_state(2, "hash-1");
+    let a2 = s1.action.clone();
+    store.append_transition(&s1, &a2, &s2, &csl, "cert-2", SafetyAssetClass::Sac3FormalProvenance, "gamma-step-2", 2000).unwrap();
+
+    let s3 = build_state(3, "hash-2");
+    let a3 = s2.action.clone();
+    store.append_transition(&s2, &a3, &s3, &csl, "cert-3", SafetyAssetClass::Sac3FormalProvenance, "gamma-step-3", 3000).unwrap();
+}

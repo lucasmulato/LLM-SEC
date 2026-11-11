@@ -2,6 +2,7 @@
 //! append-only hash-chained storage, SAC evidence objects with provenance Γ,
 //! and offline audit/replay verification.
 
+#![forbid(unsafe_code)]
 #![deny(clippy::float_arithmetic)]
 
 pub mod error;

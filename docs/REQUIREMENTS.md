@@ -282,23 +282,24 @@ The SSI formal architecture defines nine mandatory proof obligations (Section 34
 
 ---
 
-## 11. Initial Gap Analysis: Current Prototype vs Normative Spec
+## 11. Final Gap Analysis: Prototype vs Normative Implementation (v0.1.0)
 
-The following gap matrix establishes the formal delta between the existing Python prototype and this Normative Specification:
+The following gap matrix establishes the verified transition from the Python research prototype to the certified `v0.1.0` product:
 
-| Requirement | Current Status | Current Implementation Reference | Gap Description & Action Required |
-| :--- | :---: | :--- | :--- |
-| **$\text{SSI}(X)$ 6-Clause Predicate** | **Heuristic / Tested** | [`core/kernel.py:962`](file:///home/lao/Documents/projects/LLM-SEC/core/kernel.py#L962) | Hardcoded 6 Python clauses in `SafetyKernel`; no formal conjunction of $SI \land VS \land HG \land AUTH \land VER \land PROV$; not proven. Must be modeled in TLA+ and re-implemented in Rust. |
-| **Explicit Invariants $\Phi$ & Tri-State Fail** | **Heuristic / Tested** | [`core/kernel.py:853`](file:///home/lao/Documents/projects/LLM-SEC/core/kernel.py#L853) | Empty $\Phi$ fails CSL check, but arbitrary invariant evaluation is not generalized. Tri-state fail-closed evaluation is incomplete. |
-| **$\text{PERMIT}(X,a)$ Soundness** | **Tested** | [`core/gate.py:236`](file:///home/lao/Documents/projects/LLM-SEC/core/gate.py#L236) | Python gate evaluates permit, but language lacks memory/type guarantees preventing dynamic monkeypatching or bypass. |
-| **Pipeline Ordering & No External Effects** | **Defective** | [`core/gate.py:465`](file:///home/lao/Documents/projects/LLM-SEC/core/gate.py#L465) | Pipeline invokes `execution_handler` before transition invariant check. If handler has side effects, "Never check after external effect" is violated! Needs pure sandbox simulation. |
-| **WAD-18 Pure Deterministic Arithmetic** | **Defective** | [`core/kernel.py:187`](file:///home/lao/Documents/projects/LLM-SEC/core/kernel.py#L187), [`core/vector_guard.py:23`](file:///home/lao/Documents/projects/LLM-SEC/core/vector_guard.py#L23) | Prototype contains `from_float` and `NormativeFloat(float)` subclassing float; silent rounding in `__mul__`/`__truediv__`. Must rewrite in Rust with zero float registers. |
-| **CSL Envelope & Monotonic Consumption** | **Tested** | [`core/ledger.py:128`](file:///home/lao/Documents/projects/LLM-SEC/core/ledger.py#L128) | Data structures present, tested via unit tests; monotonic risk/budget tracking needs formal state machine verification. |
-| **System Partition $(K,M,G)$ & $R^3$ Adoption** | **Implemented** | [`crates/ssi-r3/src/lib.rs`](crates/ssi-r3/src/lib.rs) | Full system partitioning $(K, M, G)$, exact `KernelEqual` byte comparison, `ADOPT(Y)` predicate with non-regression and 15 mutation checks, SAC-1 ledgering, and SSI §26 fixed-point harness. |
-| **10-Tuple Certificate $C$ & Exact State Binding** | **Implemented** | [`crates/ssi-pco/src/certificate.rs`](crates/ssi-pco/src/certificate.rs) | Fully implemented 10-tuple certificate with Ed25519 signature, RFC 8785 canonical digest, and exact `BOUND(C, X)` state-binding. |
-| **Provenance $P$ & Canonical Encoding** | **Heuristic / Tested** | [`core/ledger.py:346`](file:///home/lao/Documents/projects/LLM-SEC/core/ledger.py#L346) | Relies on Python `json.dumps` stringification rather than RFC 8785 canonical JSON or deterministic binary encoding. |
-| **$\text{SAC}(X,C)$ Predicate** | **Missing** | [`core/ledger.py:453`](file:///home/lao/Documents/projects/LLM-SEC/core/ledger.py#L453) | `SACEvidence` stores audit records, but the normative mathematical evaluation function $\text{SAC}(X,C)$ is not evaluated. |
-| **PCO Independent Validator** | **Implemented** | [`crates/ssi-pco/src/validator.rs`](crates/ssi-pco/src/validator.rs) | Process-isolated adapter trait with fail-closed semantics, pre-action ledger commit, and end-to-end toy compliance validator. |
-| **PURE WAD18 3-Layer Pipeline** | **Missing** | *None* | Zero linter or binary scanner infrastructure. |
-| **Proof Obligations PO-1..PO-9** | **Tested (Level 1)** | [`tests/test_axioms.py:1`](file:///home/lao/Documents/projects/LLM-SEC/tests/test_axioms.py#L1) | Claims "machine-checked verification" in README, but relies entirely on `unittest.TestCase` assertions. Must be demoted to Level 1 and upgraded via TLA+ and Lean. |
-| **Conformance Table with Evidence** | **Missing** | [`README.md:81`](file:///home/lao/Documents/projects/LLM-SEC/README.md#L81) | Current README falsely reports Level 3 "Verified" across all POs without machine-checked proof artifacts. |
+| Requirement | Initial Prototype | Final Product State (v0.1.0) | Conformance | Status |
+| :--- | :---: | :--- | :---: | :---: |
+| **$\text{SSI}(X)$ 6-Clause Predicate** | Heuristic / Tested | Rust struct `SystemState` + TLA+ model `SSI_Kernel.tla` | **Level 3** | ✅ CLOSED |
+| **Explicit Invariants $\Phi$ & Tri-State Fail** | Heuristic / Tested | Generic invariant evaluator; $\Phi = \emptyset \implies \text{FAIL}$; $\bot \implies \text{FAIL}$ | **Level 1** | ✅ CLOSED |
+| **$\text{PERMIT}(X,a)$ Soundness** | Tested | Memory-safe, non-bypassable Rust pipeline in `ssi-gate` | **Level 3** | ✅ CLOSED |
+| **Pipeline Ordering & No External Effects** | Defective | 5-stage pipeline; pure simulation; pre-action ledger commit | **Level 1** | ✅ CLOSED |
+| **WAD-18 Pure Deterministic Arithmetic** | Defective | Zero-float `wad18` crate + 3-layer verification scanner | **Level 2** | ✅ CLOSED |
+| **CSL Envelope & Monotonic Consumption** | Tested | Formally checked state machine in `ssi-csl` with Ed25519 sigs | **Level 3** | ✅ CLOSED |
+| **System Partition $(K,M,G)$ & $R^3$ Adoption** | Implemented | `ssi-r3` crate with non-regression & 15 mutation checks | **Level 1** | ✅ CLOSED |
+| **10-Tuple Certificate $C$ & Exact State Binding** | Implemented | Full 10-tuple cryptographic certificate with $\text{BOUND}(C, X)$ | **Level 1** | ✅ CLOSED |
+| **Provenance $P$ & Canonical Encoding** | Heuristic / Tested | RFC 8785 canonical encoder in `ssi-ledger` | **Level 1** | ✅ CLOSED |
+| **$\text{SAC}(X,C)$ Predicate** | Missing | First-class SAC-1/2/3 evaluation predicate in `ssi-ledger` | **Level 1** | ✅ CLOSED |
+| **PCO Independent Validator** | Implemented | Process-isolated validator in `ssi-pco` + pre-action commit | **Level 1** | ✅ CLOSED |
+| **PURE WAD18 3-Layer Pipeline** | Missing | Pre-commit AST linter + opcode scanner CLI in `tools/pure_wad18` | **Level 2** | ✅ CLOSED |
+| **15 Canonical Mutation Attack Suite** | Missing | Automated CI test harness catching 15/15 mutations (100%) | **Level 1** | ✅ CLOSED |
+| **Proof Obligations PO-1..PO-9** | Tested (Level 1) | Machine-checked evidence matrix across TLC, proptests, tests | **Level 2 / 3** | ✅ CLOSED |
+| **Conformance Table with Evidence** | Missing | Authoritative `docs/CONFORMANCE.md` citing proof artifacts | **Level 2** | ✅ CLOSED |

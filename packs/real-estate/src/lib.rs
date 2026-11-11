@@ -3,6 +3,7 @@
 //! Provides formal invariant enforcement, CSL schema presets, SAC evidence mapping,
 //! and high-assurance gating for commercial real-estate autonomous underwriting.
 
+#![forbid(unsafe_code)]
 #![deny(clippy::float_arithmetic)]
 
 pub mod csl_preset;

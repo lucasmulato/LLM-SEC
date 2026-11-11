@@ -8,6 +8,7 @@
 //! - SACEvidence ledger recording for successful adoption and quarantine rollback for failures
 //! - SSI §26 Fixed-point evolution harness R^3(X*) = X*
 
+#![forbid(unsafe_code)]
 #![deny(clippy::float_arithmetic)]
 
 pub mod adopt;

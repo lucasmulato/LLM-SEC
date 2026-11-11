@@ -1,8 +1,8 @@
 # PURE WAD-18 Verification Report
 
-> **Generated:** 2026-11-11T13:40:51Z  
+> **Generated:** 2026-11-11T14:47:45Z  
 > **Tool:** `pure-wad18`  
-> **Scope:** `./crates`
+> **Scope:** `/home/lao/Documents/projects/LLM-SEC/crates`
 
 ## ✅ **VERDICT: VERIFIED**
 
@@ -10,7 +10,7 @@
 
 | Layer | Description | Result |
 |-------|-------------|--------|
-| **Layer 1** | Source scanner — 45 files scanned | ✅ PASS |
+| **Layer 1** | Source scanner — 46 files scanned | ✅ PASS |
 | **Layer 2** | Float-free build (`wasm32v1-none`) | ✅ PASS |
 | **Layer 3** | Binary opcode scan — 1 artifact(s) | ✅ PASS |
 
@@ -27,12 +27,12 @@
 **Result:** Build succeeded; zero float-related compiler errors.
 
 **Artifacts produced:**
-- `./target/wasm32v1-none/release/libwad18.rlib`
+- `/home/lao/Documents/projects/LLM-SEC/target/wasm32v1-none/release/libwad18.rlib`
 
 ## Layer 3: Binary Opcode Scan
 
 **Artifacts scanned:**
-- `./target/wasm32v1-none/release/libwad18.rlib`
+- `/home/lao/Documents/projects/LLM-SEC/target/wasm32v1-none/release/libwad18.rlib`
 
 **Result:** Zero float/vector opcodes detected.
 

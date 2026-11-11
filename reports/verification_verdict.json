@@ -1,0 +1,158 @@
+{
+  "system": "LLM-SEC Normative Execution Gateway",
+  "version": "0.1.0",
+  "timestamp_utc": "2026-11-11T14:47:15.114212+00:00",
+  "git_commit": "90a98774a32b08ca44bb15cf91c84a0fc383be3f",
+  "overall_verdict": "VERIFIED",
+  "conformance_level_overall": "CONF-2 (Reproducible)",
+  "conformance_level_model_checking": "CONF-3 (Bounded Model Checking, TLC, depth 10)",
+  "total_elapsed_seconds": 236.56,
+  "stages": [
+    {
+      "name": "1. Build Workspace",
+      "command": [
+        "cargo",
+        "build",
+        "--workspace",
+        "--all-targets"
+      ],
+      "success": true,
+      "return_code": 0,
+      "elapsed_seconds": 28.84,
+      "summary": "    Finished `dev` profile [unoptimized + debuginfo] target(s) in 28.36s"
+    },
+    {
+      "name": "2. PURE WAD18 3-Layer Float Scan",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "pure-wad18"
+      ],
+      "success": true,
+      "return_code": 0,
+      "elapsed_seconds": 6.9,
+      "summary": "  JSON:     /home/lao/Documents/projects/LLM-SEC/reports/pure_wad18_report.json"
+    },
+    {
+      "name": "3. Comprehensive Test Suite",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace"
+      ],
+      "success": true,
+      "return_code": 0,
+      "elapsed_seconds": 5.23,
+      "summary": "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+    },
+    {
+      "name": "4. TLC Bounded Model Checking",
+      "command": [
+        "java",
+        "-XX:+UseParallelGC",
+        "-cp",
+        "specs/tla/tla2tools.jar",
+        "tlc2.TLC",
+        "-config",
+        "specs/tla/SSI_Kernel.cfg",
+        "-workers",
+        "4",
+        "specs/tla/SSI_Kernel.tla"
+      ],
+      "success": true,
+      "return_code": 0,
+      "elapsed_seconds": 11.69,
+      "summary": "Finished in 08s at (2026-11-11 11:48:07)"
+    },
+    {
+      "name": "5. 15-Mutant Adversarial Engine",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "mutation_engine"
+      ],
+      "success": true,
+      "return_code": 0,
+      "elapsed_seconds": 109.45,
+      "summary": "VERDICT: 15/15 MUTANTS DETECTED (100% CATCH RATE) \u2014 ACCEPTANCE PASSED."
+    },
+    {
+      "name": "6. Cryptographic Offline Replay Audit",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "ssi-ledger",
+        "--bin",
+        "replay_audit",
+        "tests/fixtures/audit_sample.ndjson"
+      ],
+      "success": true,
+      "return_code": 0,
+      "elapsed_seconds": 8.85,
+      "summary": "[AUDIT_PASS] Verified 3 transitions. Root chain intact. Final hash: f14e983f2bbeb5438593903d0e29adf0e7892f1bbccfaede97b5374fd6f4e33a"
+    },
+    {
+      "name": "7. Real-Estate Domain Pack Acceptance",
+      "command": [
+        "bash",
+        "packs/real-estate/run.sh"
+      ],
+      "success": true,
+      "return_code": 0,
+      "elapsed_seconds": 33.26,
+      "summary": "========================================================"
+    },
+    {
+      "name": "8. Software Bill of Materials (SBOM)",
+      "command": [
+        "python3",
+        "scripts/generate_sbom.py"
+      ],
+      "success": true,
+      "return_code": 0,
+      "elapsed_seconds": 32.34,
+      "summary": "Generated SBOM at /home/lao/Documents/projects/LLM-SEC/scripts/../reports/sbom.json with 85 components."
+    }
+  ],
+  "proof_obligations_validated": {
+    "PO-1": {
+      "name": "Type Safety & State Inhabitance",
+      "status": "CONF-1 (Rust Type System + Tests)"
+    },
+    "PO-2": {
+      "name": "WAD-18 Arithmetic Soundness",
+      "status": "CONF-2 (PURE WAD18 3-Layer + Proptests)"
+    },
+    "PO-3": {
+      "name": "Authorization Soundness (\u00acAUTH \u21d2 \u00acEXECUTE)",
+      "status": "CONF-3 (TLC 172k states checked)"
+    },
+    "PO-4": {
+      "name": "Verification Soundness (\u00acVER \u21d2 \u00acEXECUTE)",
+      "status": "CONF-3 (TLC + Independent Validator)"
+    },
+    "PO-5": {
+      "name": "Invariant Preservation (Inv(X'))",
+      "status": "CONF-3 (TLC Inductive + Trace Validator)"
+    },
+    "PO-6": {
+      "name": "Cryptographic Provenance Binding",
+      "status": "CONF-1 (Pre-Action Ledger + BOUND(C,X))"
+    },
+    "PO-7": {
+      "name": "Safety Kernel Immutability",
+      "status": "CONF-1 (KernelManifest + MUT-15 Rejection)"
+    },
+    "PO-8": {
+      "name": "Recursive Non-Regression (R^3 / ADOPT)",
+      "status": "CONF-1 (Full Suite Invariant Check)"
+    },
+    "PO-9": {
+      "name": "Deterministic Reproducibility",
+      "status": "CONF-2 (Unified Capsule & Replay Audit)"
+    }
+  }
+}

@@ -9,6 +9,7 @@
 //! 4. Pre-action cryptographic ledger commitment before releasing external effects.
 //! 5. Dynamic Revocation API: revoked certificates/assets can never authorize execution.
 
+#![forbid(unsafe_code)]
 #![deny(clippy::float_arithmetic)]
 
 pub mod error;
