@@ -7,6 +7,7 @@ members = [
     "crates/ssi-ledger",
     "crates/ssi-pco",
     "crates/ssi-r3",
+    "packs/real-estate",
     "tools/pure_wad18",
     "tools/trace-validator",
     "tools/mutation_engine",
